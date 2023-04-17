@@ -73,6 +73,6 @@ class Square:
                 to_print += '#' * self.size
                 if ch != self.__size - 1:
                     to_print += '\n'
-        else: 
+        else:
             to_print = ''
         return to_print

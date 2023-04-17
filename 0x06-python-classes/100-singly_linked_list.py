@@ -52,16 +52,16 @@ class SinglyLinkedList():
         if self.__head is None:
             self.__head = NewNode
             return
-        if DataValue < self.__head.data:                                    
-            NewNode.next_node = self.__head                             
-            self.__head = NewNode                                       
+        if DataValue < self.__head.data:
+            NewNode.next_node = self.__head
+            self.__head = NewNode
             return
         actual = self.__head
         while DataValue >= actual.data:
             prev = actual
             if actual.next_node:
                 actual = actual.next_node
-            else:                                                           
+            else:
                 actual.next_node = NewNode
                 return
         prev.next_node = NewNode
