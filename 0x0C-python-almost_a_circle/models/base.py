@@ -65,7 +65,7 @@ class Base:
 
         if os.path.exists(filename) is False:
             return []
-    
+
         with open(filename, 'r') as f:
             list_str = f.read()
 
