@@ -8,7 +8,7 @@ A project done during **Full Stack Software Engineering Studies** at **ALX** to 
 ##Files
 **Here's a list of the files alongside the description of the scripts they contain**
 | **FILES** | **DESCRIPTION** |
-| - - - | - - - |
+| --- | --- |
 | `0-privileges.sql` | A script that lists all privileges of the **MySQL** users `user_0d_1` and `user_0d_2` on your server (in localhost) |
 | `1-create_user.sql` | A Write a script that creates the **MySQL** server user `user_0d_1` |
 |		      | * `user_0d_1` should have all privileges on your MySQL server |
