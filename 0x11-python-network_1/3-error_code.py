@@ -1,14 +1,17 @@
 #!/usr/bin/python3
-"""Python script that takes url & email, sends a POST request and displays the response"""
-from urllib.request import Request, urlopen
-from urllib.error import HTTPError
-from sys import argv
+"""
+Python script that takes in a URL, sends a request and displays
+the value of the X-Request-Id variable found in the header
+(handling HTTP errors)
+"""
+from urllib import request, error
+import sys
 
-if __name__ == '__main__':
-    req = Request(argv[1])
+
+if __name__ == "__main__":
     try:
-        with urlopen(req) as response:
-            r = response.read()
-            print(r.decode('utf-8'))
-    except HTTPError as e:
-        print('Error code:', e.code)
+        with request.urlopen(sys.argv[1]) as response:
+            body = response.read()
+            print(body.decode('utf-8'))
+    except error.HTTPError as err:
+        print('Error code: {}'.format(err.code))
