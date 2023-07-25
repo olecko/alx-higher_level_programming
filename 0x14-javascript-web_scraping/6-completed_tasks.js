@@ -1,28 +1,26 @@
 #!/usr/bin/node
-const request = require('request');
 
-function computeCompletedTasks(apiUrl) {
-  request(apiUrl, { json: true }, (err, res, data) => {
-    if (err) {
-      console.error('Error fetching data:', err);
-      return;
-    }
+const rq = require('request');
+const url = process.argv[2];
 
-    const completedTasks = data.filter(task => task.completed);
-
-    const completedTasksCount = {};
-
-    completedTasks.forEach(task => {
-      if (completedTasksCount.hasOwnProperty(task.userId)) {
-        completedTasksCount[task.userId]++;
-      } else {
-        completedTasksCount[task.userId] = 1;
+rq(url, function (err, response, body) {
+  if (err) {
+    console.log(err);
+  } else if (response.statusCode === 200) {
+    const completed = {};
+    const tasks = JSON.parse(body);
+    for (const i in tasks) {
+      const task = tasks[i];
+      if (task.completed === true) {
+        if (completed[task.userId] === undefined) {
+          completed[task.userId] = 1;
+        } else {
+          completed[task.userId]++;
+        }
       }
-    });
-
-    console.log(completedTasksCount);
-  });
-}
-
-computeCompletedTasks(process.argv[2]);
-
+    }
+    console.log(completed);
+  } else {
+    console.log('Error occured. Status code: ' + response.statusCode);
+  }
+});
