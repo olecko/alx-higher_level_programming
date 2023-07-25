@@ -1,18 +1,28 @@
 #!/usr/bin/node
 const request = require('request');
 
-request(process.argv[2], function (err, response, body) {
-  if (err == null) {
-    const resp = {};
-    const json = JSON.parse(body);
-    for (let i = 0; i < json.length; i++) {
-      if (json[i].completed === true) {
-        if (resp[json[i].userId] === undefined) {
-          resp[json[i].userId] = 0;
-        }
-        resp[json[i].userId]++;
-      }
+function computeCompletedTasks(apiUrl) {
+  request(apiUrl, { json: true }, (err, res, data) => {
+    if (err) {
+      console.error('Error fetching data:', err);
+      return;
     }
-    console.log(resp);
-  }
-});
+
+    const completedTasks = data.filter(task => task.completed);
+
+    const completedTasksCount = {};
+
+    completedTasks.forEach(task => {
+      if (completedTasksCount.hasOwnProperty(task.userId)) {
+        completedTasksCount[task.userId]++;
+      } else {
+        completedTasksCount[task.userId] = 1;
+      }
+    });
+
+    console.log(completedTasksCount);
+  });
+}
+
+computeCompletedTasks(process.argv[2]);
+
